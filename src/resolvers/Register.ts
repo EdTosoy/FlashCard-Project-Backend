@@ -14,14 +14,15 @@ export class Register {
     @Arg("username") username: string,
     @Arg("email") email: string,
     @Arg("password") password: string
-  ): Promise<User | null> {
+  ): Promise<User> {
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const user = await User.create({
       email: email,
       username: username,
       password: hashedPassword,
-    });
+    }).save();
+    console.log(user);
 
     return user;
   }
