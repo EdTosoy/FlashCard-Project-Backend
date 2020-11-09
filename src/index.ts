@@ -1,38 +1,21 @@
-import { createConnection } from "typeorm";
-import express from "express";
-import { ApolloServer } from "apollo-server-express";
-import { buildSchema } from "type-graphql";
+import "reflect-metadata";
+import {createConnection} from "typeorm";
+import {User} from "./entity/User";
 
-const main = async () => {
-  await createConnection();
-  const app = express();
+createConnection().then(async connection => {
 
-  const schema = await buildSchema({
-    resolvers: [__dirname + "/resolvers/**/*.ts"],
-    authChecker: ({ context: { req } }) => {
-      if (!req.session!.userId) {
-        return false;
-      }
-      return true;
-    },
-  });
+    console.log("Inserting a new user into the database...");
+    const user = new User();
+    user.firstName = "Timber";
+    user.lastName = "Saw";
+    user.age = 25;
+    await connection.manager.save(user);
+    console.log("Saved a new user with id: " + user.id);
 
-  const apolloServer = new ApolloServer({
-    schema,
-    context: ({ req, res }: any) => ({ req, res }),
-  });
+    console.log("Loading users from the database...");
+    const users = await connection.manager.find(User);
+    console.log("Loaded users: ", users);
 
-  apolloServer.applyMiddleware({ app });
+    console.log("Here you can setup and run express/koa/any other framework.");
 
-  app.listen({ port: 4000 }, () => {
-    console.log(
-      `Server ready at http://localhost:4000${apolloServer.graphqlPath}`
-    );
-  });
-};
-
-try {
-  main();
-} catch (err) {
-  console.error(err);
-}
+}).catch(error => console.log(error));

@@ -1,28 +1,18 @@
-import { IsEmail } from "class-validator";
-import { ObjectType, Field } from "type-graphql";
-import { ID } from "type-graphql/dist/scalars/aliases";
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
 
-@ObjectType()
 @Entity()
-export class User extends BaseEntity {
-  @Field(() => ID)
-  @PrimaryGeneratedColumn()
-  id: number;
+export class User {
 
-  @Field()
-  @Column()
-  username: string;
+    @PrimaryGeneratedColumn()
+    id: number;
 
-  @Field()
-  @Column("text", { unique: true })
-  @IsEmail()
-  email: string;
+    @Column()
+    firstName: string;
 
-  @Field()
-  @Column()
-  password: string;
+    @Column()
+    lastName: string;
 
-  @Column("bool", { default: false })
-  confirmed: boolean;
+    @Column()
+    age: number;
+
 }
