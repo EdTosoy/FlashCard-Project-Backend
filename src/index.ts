@@ -8,9 +8,18 @@ import { verify } from "jsonwebtoken";
 import { User } from "./entity/User";
 import { createAccessToken, createRefreshToken } from "./Auth";
 import { sendRefreshToken } from "./sendRefreshToken";
+import cors from "cors";
 
 (async () => {
   const app = express();
+
+  app.use(
+    cors({
+      origin: "http://localhost:3000",
+      credentials: true,
+      optionsSuccessStatus: 200,
+    })
+  );
 
   app.get("/", (_, res) => {
     res.send("hello");
