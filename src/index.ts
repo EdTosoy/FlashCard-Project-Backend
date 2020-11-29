@@ -17,7 +17,6 @@ import cors from "cors";
     cors({
       origin: "http://localhost:3000",
       credentials: true,
-      optionsSuccessStatus: 200,
     })
   );
 
@@ -61,7 +60,7 @@ import cors from "cors";
     context: ({ req, res }) => ({ req, res }),
   });
 
-  apolloServer.applyMiddleware({ app });
+  apolloServer.applyMiddleware({ app, cors: false });
 
   app.listen(4000, () => {
     console.log("server started on http://localhost:4000/graphql");
