@@ -20,7 +20,10 @@ export class Register {
     @Arg("password") password: string
   ) {
     const hashedPassword = await hash(password, 12);
-
+    const userExist = await User.findOne({ where: { email: email } });
+    if (userExist) {
+      throw new Error("User already exist");
+    }
     try {
       await User.insert({
         email,
