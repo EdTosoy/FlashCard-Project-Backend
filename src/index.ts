@@ -64,6 +64,6 @@ import cors from "cors";
   apolloServer.applyMiddleware({ app, cors: false });
 
   app.listen(PORT, () => {
-    console.log("server started on http://localhost:4000/graphql");
+    console.log("server started at http://localhost:4000/graphql");
   });
 })();
