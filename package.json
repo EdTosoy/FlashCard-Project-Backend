@@ -32,6 +32,6 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "nodemon --exec ts-node src/index.ts "
+    "start": "nodemon --unhandled-rejections=strict --exec ts-node dist/index.js "
   }
 }
