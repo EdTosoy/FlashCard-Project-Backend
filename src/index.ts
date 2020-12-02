@@ -11,6 +11,7 @@ import { sendRefreshToken } from "./sendRefreshToken";
 import cors from "cors";
 
 (async () => {
+  const PORT = process.env.PORT || 5000;
   const app = express();
 
   app.use(
@@ -62,7 +63,7 @@ import cors from "cors";
 
   apolloServer.applyMiddleware({ app, cors: false });
 
-  app.listen(4000, () => {
+  app.listen(PORT, () => {
     console.log("server started on http://localhost:4000/graphql");
   });
 })();
